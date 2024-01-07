@@ -1,37 +1,26 @@
-package com.alkan.task_management.domain.auth.impl;
+package com.alkan.task_management.domain.auth.web;
 
-import com.alkan.task_management.domain.task.impl.Task;
 
 import com.alkan.task_management.library.enums.Role;
-import jakarta.persistence.*;
 
-import java.util.List;
 import java.util.Set;
 
-@Entity
-@Table(name = "users")
-public class User {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class LoginResponse {
     private Long id;
     private String username;
     private String password;
     private String email;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Task> taskList;
-    @ElementCollection(fetch = FetchType.EAGER)
     private Set<Role> authorities;
 
-    public User() {
-    }
-
-    public void setAuthorities(Set<Role> authorities) {
+    public LoginResponse(Long id, String username, String password, String email, Set<Role> authorities) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.email = email;
         this.authorities = authorities;
     }
 
-    public Set<Role> getAuthorities() {
-        return authorities;
+    public LoginResponse() {
     }
 
     public Long getId() {
@@ -66,11 +55,11 @@ public class User {
         this.email = email;
     }
 
-    public List<Task> getTaskList() {
-        return taskList;
+    public Set<Role> getAuthorities() {
+        return authorities;
     }
 
-    public void setTaskList(List<Task> taskList) {
-        this.taskList = taskList;
+    public void setAuthorities(Set<Role> authorities) {
+        this.authorities = authorities;
     }
 }
