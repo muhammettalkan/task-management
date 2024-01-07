@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -42,6 +43,13 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(id).orElseThrow();
         return toDto(user);
     }
+    @Override
+    public List<UserDto> findAll(){
+        return userRepository.findAll()
+                .stream()
+                .map(this::toDto)
+                .toList();
+    }
 
     @Override
     public String register(RegisterRequest registerRequest) {
@@ -57,15 +65,13 @@ public class UserServiceImpl implements UserService {
         Set<Role> authorities = new HashSet<>();
         authorities.add(Role.ROLE_USER);
         user.setAuthorities(authorities);
-
-        user = userRepository.save(user);
+        userRepository.save(user);
 
         return "User registered successfully";
     }
 
     @Override
     public LoginResponse login(LoginRequest loginRequest) {
-
 
         Authentication authentication= authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.email , loginRequest.password));
 
@@ -84,6 +90,11 @@ public class UserServiceImpl implements UserService {
         return response;
 
     }
+    @Override
+    public String delete(Long id){
+        userRepository.deleteById(id);
+        return "User deleted successfully";
+    }
 
     private UserDto toDto(User user){
         UserDto userDto = new UserDto();
@@ -93,20 +104,6 @@ public class UserServiceImpl implements UserService {
         userDto.email = user.getEmail();
         userDto.taskList = taskService.findByUserId(user.getId());
         return userDto;
-    }
-    public User register(UserDto userDto){
-        if (userRepository.existsByUsername(userDto.username)){
-            throw new RuntimeException("Username already exists");
-        }
-        if (userRepository.existsByEmail(userDto.email)){
-            throw new RuntimeException("Email already exists");
-        }
-        User user = new User();
-        user.setId(userDto.id);
-        user.setUsername(userDto.username);
-        user.setPassword(userDto.password);
-        user.setEmail(userDto.email);
-        return user;
     }
 
 }

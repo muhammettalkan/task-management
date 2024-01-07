@@ -8,7 +8,7 @@ spring:
     url: jdbc:mysql://localhost:3306/task-management?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
     driverClassName: com.mysql.jdbc.Driver
     username: root
-    password: furkan2023
+    password: 985263
   jpa:
     hibernate:
       ddl-auto: update
@@ -16,6 +16,3 @@ spring:
     properties:
       hibernate:
         format_sql: true
-
-
-

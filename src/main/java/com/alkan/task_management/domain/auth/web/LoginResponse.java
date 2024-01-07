@@ -12,15 +12,15 @@ public class LoginResponse {
     private String email;
     private Set<Role> authorities;
 
+    public LoginResponse() {
+    }
+
     public LoginResponse(Long id, String username, String password, String email, Set<Role> authorities) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
         this.authorities = authorities;
-    }
-
-    public LoginResponse() {
     }
 
     public Long getId() {

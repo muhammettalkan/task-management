@@ -2,14 +2,12 @@ package com.alkan.task_management.domain.task.web;
 
 import com.alkan.task_management.library.enums.Status;
 
-public class TaskResponse {
+public class TaskRequest {
 
-    public Long id;
     public String title;
     public String description;
-    public Status status;
-    public Long userId;
+    public Status status = Status.TODO;
 
-    public TaskResponse() {
+    public TaskRequest() {
     }
 }
